@@ -10,7 +10,8 @@ const Navber = () => {
     const links = <>
         <li className='font-semibold'><NavLink to='/'>Home</NavLink></li>
         <li className='font-semibold'><NavLink to='#'>Deshboard</NavLink></li>
-        {/* <li className='font-semibold'><NavLink to='/Blog'>Blog</NavLink></li> */}
+        <li className='font-semibold'><NavLink to='/private'>Private</NavLink></li>
+        
     </>
     return (
         <div>
@@ -52,28 +53,20 @@ const Navber = () => {
                                     </label>
                                     <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
                                         <li><button className="text-red-600 font-bold" onClick={handleLogout}>Log Out</button></li>
-                                        <li>
-                                            <a className="justify-between">
-                                                <h2 className='text-green-500 font-semibold'>{user.displayName}</h2>
-                                            </a>
-                                        </li>
+                                        <p className='ml-3'>
+                                            <div className="justify-between">
+                                                <h2 className='text-green-500 font-semibold'>{
+                                                user.displayName}</h2>
+                                            </div>
+                                        </p>
                                         
                                     </ul>
                                 </div>
 
                             </>
                         ) : (
-                            // <NavLink className="btn btn-ghost capitalize" to="/login">
-                            //     Login
-                            // </NavLink>
                             <NavLink to='/login' className="btn btn-outline btn-warning">Login</NavLink>
-
                         )}
-
-                        {/* <NavLink className="btn btn-ghost capitalize" to="/login">
-                        Login
-                </NavLink> */}
-
                     </div>
                 </div>
             </div>

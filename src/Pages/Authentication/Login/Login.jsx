@@ -1,11 +1,15 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../Providers/AuthProvider';
 import Swal from 'sweetalert2';
 
 const Login = () => {
 
     const {signIn} = useContext(AuthContext);
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const form = location.state?.form?.pathname || '/';
 
     const handleLogin = event => {
         event.preventDefault();
@@ -26,7 +30,7 @@ const Login = () => {
                         popup: 'animate__animated animate__fadeOutUp'
                     }
                 });
-                navigate(from, { replace: true });
+                navigate(location?.state ? location.state : '/');
             })
     }
 
