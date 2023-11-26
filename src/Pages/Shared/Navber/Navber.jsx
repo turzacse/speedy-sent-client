@@ -9,7 +9,7 @@ const Navber = () => {
     }
     const links = <>
         <li className='font-semibold'><NavLink to='/'>Home</NavLink></li>
-        <li className='font-semibold'><NavLink to='#'>Deshboard</NavLink></li>
+        <li className='font-semibold'><NavLink to='/dashboard'>Deshboard</NavLink></li>
         <li className='font-semibold'><NavLink to='/private'>Private</NavLink></li>
         
     </>
@@ -27,7 +27,7 @@ const Navber = () => {
                             </ul>
                         </div>
                         <Link>
-                            <img className="h-[80px] rounded-full" src='https://i.ibb.co/4Ygm27Q/Borcelle.png' alt="" />
+                            <img className="h-[80px] rounded-full" src='https://i.ibb.co/fv9mRdw/Speedy-Send.png' alt="" />
                             {/* <h2 className="text-xl font-semibold text-orange-500 hidden md:block">Bangla Bites</h2> */}
                         </Link>
                         {/* <a className="btn btn-ghost normal-case text-xl">daisyUI</a> */}
