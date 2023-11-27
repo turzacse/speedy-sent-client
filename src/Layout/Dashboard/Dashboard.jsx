@@ -6,9 +6,34 @@ import { GrUserWorker } from "react-icons/gr";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { FaToolbox } from "react-icons/fa";
 import { RiFeedbackFill } from "react-icons/ri";
+import { useContext, useEffect, useState } from "react";
+import { AuthContext } from "../../Providers/AuthProvider";
+
+
+
 
 // bg-[#67887e] 
 const Dashboard = () => {
+
+    const { user } = useContext(AuthContext);
+    //console.log(user.email);
+    const [logged, setLogged] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        if (logged) {
+            fetch(`http://localhost:5000/users/${user.email}`)
+                .then(res => res.json())
+                .then(data => {
+                    setLogged(data);
+                    setLoading(false);
+                })
+        }
+
+    }, [logged])
+
+    //console.log(logged.role);
+
     return (
         <div className="flex gap-10 mx-20">
             <div className="w-60 min-h-screen bg-orange-200 ">
@@ -17,21 +42,48 @@ const Dashboard = () => {
                     {/* <h1 className="text-3xl font-bold text-center">Speedy Send</h1> */}
                 </div>
                 <ul className="menu p-4 text-lg ">
-                    <li><NavLink to='/dashboard/book'><FaBook></FaBook> Book a Parcel</NavLink></li>
+                    {logged?.role === 'user' && (<>
+                        <li><NavLink to='/dashboard/book'><FaBook></FaBook> Book a Parcel</NavLink></li>
+                        <li><NavLink to='/dashboard/myparcel'><RiRedPacketFill></RiRedPacketFill>My Parcel </NavLink></li>
+                        <li><NavLink to='/dashboard/profile'><FaUserCircle></FaUserCircle>My Profile</NavLink></li>
+                    </>)
+                    }
+                    {
+                        logged?.role === 'admin' && (
+                            <>
+                                <li><NavLink to='/dashboard/allparcels'><RiRedPacketFill></RiRedPacketFill>Parcels</NavLink></li>
+
+                                <li><NavLink to='/dashboard/alldeliverymen'><GrUserWorker></GrUserWorker> Delivery Men</NavLink></li>
+
+                                <li><NavLink to='/dashboard/allusers'><FaPeopleGroup></FaPeopleGroup> Users</NavLink></li>
+                            </>
+                        )
+                    }
+                    {
+                        logged?.role === 'deliverymen' && (
+                            <>
+                                <li><NavLink to='/dashboard/mydelivery'><FaToolbox></FaToolbox> My Delivery</NavLink></li>
+
+                                <li><NavLink to='/dashboard/reviews'><RiFeedbackFill></RiFeedbackFill> Reviews</NavLink></li>
+                            </>
+                        )
+                    }
+
+                    {/* <li><NavLink to='/dashboard/book'><FaBook></FaBook> Book a Parcel</NavLink></li>
                     <li><NavLink to='/dashboard/myparcel'><RiRedPacketFill></RiRedPacketFill>My Parcel </NavLink></li>
-                    <li><NavLink to='/dashboard/profile'><FaUserCircle></FaUserCircle>My Profile</NavLink></li>
+                    <li><NavLink to='/dashboard/profile'><FaUserCircle></FaUserCircle>My Profile</NavLink></li> */}
 
                     {/* Admin part  */}
-                    <li><NavLink to='/dashboard/allparcels'><RiRedPacketFill></RiRedPacketFill>Parcels</NavLink></li>
+                    {/* <li><NavLink to='/dashboard/allparcels'><RiRedPacketFill></RiRedPacketFill>Parcels</NavLink></li>
 
                     <li><NavLink to='/dashboard/alldeliverymen'><GrUserWorker></GrUserWorker> Delivery Men</NavLink></li>
 
-                    <li><NavLink to='/dashboard/allusers'><FaPeopleGroup></FaPeopleGroup> Users</NavLink></li>
+                    <li><NavLink to='/dashboard/allusers'><FaPeopleGroup></FaPeopleGroup> Users</NavLink></li> */}
 
                     {/* Delivery Men Part  */}
-                    <li><NavLink to='/dashboard/mydelivery'><FaToolbox></FaToolbox> My Delivery</NavLink></li>
+                    {/* <li><NavLink to='/dashboard/mydelivery'><FaToolbox></FaToolbox> My Delivery</NavLink></li>
 
-                    <li><NavLink to='/dashboard/reviews'><RiFeedbackFill></RiFeedbackFill> Reviews</NavLink></li>
+                    <li><NavLink to='/dashboard/reviews'><RiFeedbackFill></RiFeedbackFill> Reviews</NavLink></li> */}
 
 
                     <div className="divider"></div>

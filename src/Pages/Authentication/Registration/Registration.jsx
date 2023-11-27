@@ -39,10 +39,22 @@ const Registration = () => {
             })
             .catch(error => console.log(error))
         })
+
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json' 
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+        })
     }
     
 
-    console.log(watch("example"))
+    // console.log(watch("example"))
 
     return (
         <div>
@@ -69,7 +81,7 @@ const Registration = () => {
                                 {errors.name && <span className='text-red-600'>Name is required</span>}
                             </div>
 
-                            <div className="form-control">
+                            {/* <div className="form-control">
                                 <label className="label">
                                     <span className="label-text">Role</span>
                                 </label>
@@ -79,7 +91,7 @@ const Registration = () => {
                                 type="text" 
                                 defaultValue="User"
                                 className="input input-bordered bg-slate-500 text-white" />
-                            </div>
+                            </div> */}
 
                             <div className="form-control">
                                 <label className="label">
