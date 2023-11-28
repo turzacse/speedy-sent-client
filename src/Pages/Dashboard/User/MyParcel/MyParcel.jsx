@@ -40,7 +40,7 @@ const MyParcel = () => {
                                 <td>{p.approximateDeliveryDate || 'Not Provide'}</td>
                                 <td>{p.bookingDate}</td>
                                 <td>{p.deliveryMenId || 'Not Assigned'}</td>
-                                <td className="font-bold text-red-400">{p.bookinStatus}</td>
+                                <td className="font-bold text-red-400">{p.bookingStatus}</td>
                                 <th className="flex-row">
                                     {
                                         p.bookinStatus === 'pending' ? <>

@@ -24,7 +24,7 @@ const Registration = () => {
         .then(result => {
             const loggedUser = result.user;
             console.log(loggedUser);
-            updateprofile(data.name, data.photo)
+            updateprofile(data.name, data.photo, data.phone)
             .then( () => {
                 console.log('Info Update');
                 reset();
@@ -79,6 +79,16 @@ const Registration = () => {
                                 name='name'
                                 type="text" placeholder="Your Name" className="input input-bordered" />
                                 {errors.name && <span className='text-red-600'>Name is required</span>}
+                            </div>
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Phone Number</span>
+                                </label>
+                                <input 
+                                {...register("phone", { required: true })}
+                                name='phone'
+                                type="text" placeholder="Your Phone Number" className="input input-bordered" />
+                                {errors.phone && <span className='text-red-600'>Phone Number is required</span>}
                             </div>
 
                             {/* <div className="form-control">

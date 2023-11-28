@@ -7,14 +7,14 @@ const useAllParcels = () => {
     const axiosSecure = useAxiosSexure();
     //const {user} = useContext(AuthContext);
 
-    const { data: parcels =[] } = useQuery({
+    const { refetch, data: parcels =[] } = useQuery({
         queryKey: ['parcels'],
         queryFn: async () => {
             const res = await axiosSecure.get('/booking')
             return res.data
         }
     })
-    return [parcels];
+    return [parcels, refetch];
 };
 
 export default useAllParcels;

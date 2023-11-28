@@ -22,7 +22,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         if (logged) {
-            fetch(`http://localhost:5000/users/${user.email}`)
+            fetch(`http://localhost:5000/users/${user?.email}`)
                 .then(res => res.json())
                 .then(data => {
                     setLogged(data);
@@ -68,22 +68,6 @@ const Dashboard = () => {
                             </>
                         )
                     }
-
-                    {/* <li><NavLink to='/dashboard/book'><FaBook></FaBook> Book a Parcel</NavLink></li>
-                    <li><NavLink to='/dashboard/myparcel'><RiRedPacketFill></RiRedPacketFill>My Parcel </NavLink></li>
-                    <li><NavLink to='/dashboard/profile'><FaUserCircle></FaUserCircle>My Profile</NavLink></li> */}
-
-                    {/* Admin part  */}
-                    {/* <li><NavLink to='/dashboard/allparcels'><RiRedPacketFill></RiRedPacketFill>Parcels</NavLink></li>
-
-                    <li><NavLink to='/dashboard/alldeliverymen'><GrUserWorker></GrUserWorker> Delivery Men</NavLink></li>
-
-                    <li><NavLink to='/dashboard/allusers'><FaPeopleGroup></FaPeopleGroup> Users</NavLink></li> */}
-
-                    {/* Delivery Men Part  */}
-                    {/* <li><NavLink to='/dashboard/mydelivery'><FaToolbox></FaToolbox> My Delivery</NavLink></li>
-
-                    <li><NavLink to='/dashboard/reviews'><RiFeedbackFill></RiFeedbackFill> Reviews</NavLink></li> */}
 
 
                     <div className="divider"></div>
