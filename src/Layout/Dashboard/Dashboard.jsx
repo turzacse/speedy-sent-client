@@ -8,6 +8,7 @@ import { FaToolbox } from "react-icons/fa";
 import { RiFeedbackFill } from "react-icons/ri";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
+import Admin from "./Admin/Admin";
 
 
 
@@ -51,6 +52,7 @@ const Dashboard = () => {
                     {
                         logged?.role === 'admin' && (
                             <>
+                            <h2 className="text-xl font-bold text-center">Admin</h2>
                                 <li><NavLink to='/dashboard/allparcels'><RiRedPacketFill></RiRedPacketFill>Parcels</NavLink></li>
 
                                 <li><NavLink to='/dashboard/alldeliverymen'><GrUserWorker></GrUserWorker> Delivery Men</NavLink></li>
@@ -62,6 +64,8 @@ const Dashboard = () => {
                     {
                         logged?.role === 'deliverymen' && (
                             <>
+                            <h2 className="text-xl font-bold text-center">Delivery Men</h2>
+                            <div className="divider"></div>
                                 <li><NavLink to='/dashboard/mydelivery'><FaToolbox></FaToolbox> My Delivery</NavLink></li>
 
                                 <li><NavLink to='/dashboard/reviews'><RiFeedbackFill></RiFeedbackFill> Reviews</NavLink></li>
@@ -79,6 +83,18 @@ const Dashboard = () => {
                 </ul>
             </div>
             <div className="flex-1">
+                
+                <div className="mt-20">
+                {
+                        logged?.role === 'admin' && (
+                            <>
+                                <div>
+                                   <Admin></Admin>
+                                </div>
+                            </>
+                        )
+                }
+                </div>
                 <Outlet></Outlet>
             </div>
         </div>

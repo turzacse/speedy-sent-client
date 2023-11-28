@@ -1,10 +1,36 @@
+import { useState } from "react";
+import useAxiosSexure from "../../../../hooks/useAxiosSexure";
 import useParcel from "../../../../hooks/useParcel";
 
 
 const MyParcel = () => {
 
-    const [parcel] = useParcel();
+    const [parcel, refetch] = useParcel();
+    const deliverd = parcel.filter(p => p.bookingStatus === 'Delivered').length;
+    const axiosSecure = useAxiosSexure();
+    const [showReviewModal, setShowReviewModal] = useState(false);
+    const [selectedParcel, setSelectedParcel] = useState(null);
 
+    const handleReviewClick = (p) => {
+        setSelectedParcel(p);
+        setShowReviewModal(true);
+        console.log('Yes');
+    };
+
+    const handleCloseModal = () => {
+        setShowReviewModal(false);
+        setSelectedParcel(null);
+    };
+
+    const handleCancelBooking = async (id) => {
+        try {
+            await axiosSecure.delete(`/booking/${id}`);
+            refetch();
+            console.log('Booking deleted successfully');
+        } catch (error) {
+            console.error('Error deleting booking:', error);
+        }
+    };
 
     return (
         <div>
@@ -13,9 +39,18 @@ const MyParcel = () => {
             </div>
             <div className="text-2xl font-semibold mb-10 flex justify-evenly">
                 <h2>Toatal Booked parcel: {parcel.length}</h2>
-                <h2>Delivered parcel: 0</h2>
+                <h2>Delivered parcel: {deliverd}</h2>
             </div>
             <div className="overflow-x-auto">
+            {showReviewModal && (
+                <div className="modal">
+                    <div className="modal-content">
+                        {/* Review form components */}
+                        {/* Close button */}
+                        <button onClick={handleCloseModal}>Close</button>
+                    </div>
+                </div>
+            )}
                 <table className="table table-pin-rows table-pin-cols">
                     <thead>
                         <tr>
@@ -43,21 +78,33 @@ const MyParcel = () => {
                                 <td className="font-bold text-red-400">{p.bookingStatus}</td>
                                 <th className="flex-row">
                                     {
-                                        p.bookinStatus === 'pending' ? <>
+                                        p.bookingStatus === 'Cancelled' && <>
+                                            <p>Canclled</p>
+                                        </>
+                                    }
+                                    {
+                                        p.bookingStatus === 'pending' && <>
                                             <button className="btn btn-outline btn-warning mb-1">Update</button>
-                                            <button className="btn btn-outline btn-warning">Cancel</button>
-                                        </> : <>
-                                        <button className="btn btn-outline btn-info">Review</button>
+                                            <button
+                                                onClick={() => handleCancelBooking(p._id)}
+                                                className="btn btn-outline btn-warning">Cancel</button>
+                                        </>
+                                    }
+                                    {
+                                        p.bookingStatus === 'Delivered' && <>
+                                            <button
+                                                onClick={handleReviewClick}
+                                                className="btn btn-outline btn-info">Review</button>
                                         </>
                                     }
                                 </th>
                                 <th>
                                     {
-                                        p.bookinStatus === 'delivered' ? <>
-                                            <button className="btn btn-outline btn-success">Cancel</button>
+                                        p.bookingStatus === 'Delivered' ? <>
+                                            <button className="btn btn-outline btn-success">Pay</button>
                                         </> :
                                             <>
-                                                <p className="text-red-400">Not Delivered</p>
+                                                Queue
                                             </>
                                     }
                                 </th>
@@ -80,6 +127,7 @@ const MyParcel = () => {
                     </tfoot>
                 </table>
             </div>
+
         </div>
     );
 };
