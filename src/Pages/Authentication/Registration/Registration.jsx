@@ -40,7 +40,7 @@ const Registration = () => {
             .catch(error => console.log(error))
         })
 
-        fetch('http://localhost:5000/users', {
+        fetch('https://speedy-send-server.vercel.app/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json' 

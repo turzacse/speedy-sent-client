@@ -38,7 +38,7 @@ const Profile = () => {
                             <label className="label">
                                 <span className="label-text">Phone</span>
                             </label>
-                            <input type="text" defaultValue={profile?.phone || 'Not provided! Please Update Your Phone'} placeholder="phone" className="input input-bordered" required />
+                            <input type="text" defaultValue={profile?.phoneNumber || 'Not provided! Please Update Your Phone'} placeholder="phone" className="input input-bordered" required />
                         </div>
                         <div className="form-control">
                             <label className="label">

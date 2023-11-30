@@ -59,10 +59,47 @@ const AllParcel = () => {
     };
 
 
+    const [fromDate, setFromDate] = useState('');
+    const [toDate, setToDate] = useState('');
+    const [filteredParcels, setFilteredParcels] = useState([...parcels]);
+
+    const handleSearch = () => {
+        const filtered = parcels.filter((parcel) => {
+            const requestedDate = new Date(parcel.bookingDate);
+            const start = fromDate ? new Date(fromDate) : null;
+            const end = toDate ? new Date(toDate) : null;
+
+            if (start && end) {
+                return requestedDate >= start && requestedDate <= end;
+            } else if (start) {
+                return requestedDate >= start;
+            } else if (end) {
+                return requestedDate <= end;
+            }
+
+            return true;
+        });
+
+        setFilteredParcels(filtered);
+    };
+
+    const resetSearch = () => {
+        setFromDate('');
+        setToDate('');
+        setFilteredParcels([... parcels]);
+    };
 
     return (
         <div className="mt-10">
             <h2>All Parcels {parcels.length}</h2>
+
+            <div className="mb-10">
+            {/* <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" /> */}
+                <input className="input input-bordered w-full max-w-xs mr-2" type="date" value={fromDate} onChange={(e) => setFromDate(e.target.value)} />
+                <input className="input input-bordered w-full max-w-xs" type="date" value={toDate} onChange={(e) => setToDate(e.target.value)} />
+                <button className="btn btn-outline mx-2 bg-blue-500 font-bold text-white border-none" onClick={handleSearch}>Search</button>
+                <button className="btn btn-outline mx-2 bg-red-600 border-none font-bold text-white" onClick={resetSearch}>Reset</button>
+            </div>
 
             <div className="overflow-x-auto">
                 <table className="table table-pin-rows table-pin-cols">
@@ -81,7 +118,7 @@ const AllParcel = () => {
                     </thead>
                     <tbody>
                         {
-                            parcels.map((p, index) => <tr key={p._id} >
+                            filteredParcels.map((p, index) => <tr key={p._id} >
                                 <th>{index + 1}</th>
                                 <td>{p.name}</td>
                                 <td>{p.phoneNumber}</td>
