@@ -84,7 +84,7 @@ const Dashboard = () => {
 
 
                     <li><NavLink to='/'><RiHome8Fill /> Home</NavLink></li>
-                    <li><p><IoMdLogOut /> Logout</p></li>
+                    {/* <li><p><IoMdLogOut /> Logout</p></li> */}
 
                 </ul>
             </div>

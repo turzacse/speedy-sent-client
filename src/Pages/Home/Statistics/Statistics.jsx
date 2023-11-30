@@ -26,7 +26,7 @@ const Statistics = () => {
                     </figure>
                     <div className="card-body items-center text-center">
                         <h2 className="card-title text-3xl font-bold text-[#05b37e]">Booked Parcel</h2>
-                        <div className='text-5xl font-bold text-orange-400'><CountUp duration={5} start={0} end={parcels?.length}></CountUp></div>
+                        <div className='text-5xl font-bold text-orange-400'><CountUp duration={10} start={0} end={parcels?.length}></CountUp></div>
                     </div>
                 </div>
 
@@ -36,7 +36,7 @@ const Statistics = () => {
                     </figure>
                     <div className="card-body items-center text-center">
                         <h2 className="card-title text-3xl font-bold text-[#05b37e]">Deliverd Parcel</h2>
-                        <div className='text-5xl font-bold text-orange-400'><CountUp duration={5} start={0} end={reviews.length}></CountUp></div>
+                        <div className='text-5xl font-bold text-orange-400'><CountUp duration={10} start={0} end={reviews.length}></CountUp></div>
                     </div>
                 </div>
 
@@ -46,7 +46,7 @@ const Statistics = () => {
                     </figure>
                     <div className="card-body items-center text-center">
                         <h2 className="card-title text-3xl font-bold text-[#05b37e]">Our Users</h2>
-                        <div className='text-5xl font-bold text-orange-400'><CountUp start={0} end={users}></CountUp></div>
+                        <div className='text-5xl font-bold text-orange-400'><CountUp duration={10} start={0} end={users.length}></CountUp></div>
                     </div>
                 </div>
             </div>
