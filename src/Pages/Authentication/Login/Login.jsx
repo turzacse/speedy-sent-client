@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../../Providers/AuthProvider';
 import Swal from 'sweetalert2';
@@ -9,6 +9,7 @@ const Login = () => {
     const {signIn} = useContext(AuthContext);
     const navigate = useNavigate();
     const location = useLocation();
+    const [wrong, setwrong] = useState("");
 
     const form = location.state?.form?.pathname || '/';
 
@@ -17,6 +18,7 @@ const Login = () => {
         const form = event.target;
         const email = form.email.value;
         const password = form.password.value;
+        
         //console.log(email, password);
         signIn(email, password)
             .then(result => {
@@ -32,6 +34,9 @@ const Login = () => {
                     }
                 });
                 navigate(location?.state ? location.state : '/');
+            })
+            .catch(err => {
+                setwrong("Your Email or Passwoard is wrong!!!")
             })
     }
 
@@ -66,6 +71,14 @@ const Login = () => {
                             <div className="form-control mt-6">
                                 <button className="btn bg-[#05b37e] text-white ">Login</button>
                             </div>
+                            {
+                                wrong? <>
+                                <p className='text-red-600 text-center'>{wrong}</p>
+                                </>
+                                :
+                                <>
+                                </>
+                            }
                             <p>New in our website? Please <Link to="/register" className='text-[#05b37e]'>Register </Link></p>
                         </form>
                         <div className='divider'></div>

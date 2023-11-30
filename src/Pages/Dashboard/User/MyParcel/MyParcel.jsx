@@ -71,16 +71,50 @@ const MyParcel = () => {
           })
           .catch(err => console.log(err));
     };
+    const [filteredStatus, setFilteredStatus] = useState('All');
+    const handleStatusFilter = (status) => {
+        setFilteredStatus(status);
+    };
+
+    const filteredParcel = () => {
+        if (filteredStatus === 'All') {
+            return parcel;
+        } else {
+            return parcel.filter((p) => p.bookingStatus === filteredStatus);
+        }
+    };
 
     return (
         <div>
+            <div className="bg-[#05b37e] py-4 rounded-3xl shadow-2xl">
             <div className="text-center my-10">
-                <h2 className="text-3xl font-bold text-orange-500 ">All of My booked parcel</h2>
+                <h2 className="text-3xl font-bol font-bold bg-yellow-200 rounded-3xl shadow-2xl p-4 ">All of My booked parcel</h2>
             </div>
             <div className="text-2xl font-semibold mb-10 flex justify-evenly">
-                <h2>Toatal Booked parcel: {parcel.length}</h2>
-                <h2>Delivered parcel: {deliverd}</h2>
+                <h2 className="bg-yellow-200 p-4 rounded-full shadow-2xl">Toatal Booked parcel {parcel.length}</h2>
+                <h2 className="bg-yellow-200 p-4 rounded-full shadow-2xl">Delivered parcel {deliverd}</h2>
             </div>
+            </div>
+
+            {/* filter  */}
+            <div className="flex items-center justify-center my-4 bg-[#05b37e] py-10 shadow-2xl rounded-full">
+                <span className="mr-4 text-2xl font-bold text-white">Filter by Status</span>
+                <select
+                    className="p-2 shadow-2xl border border-gray-300 rounded-full"
+                    value={filteredStatus}
+                    onChange={(e) => handleStatusFilter(e.target.value)}
+                >
+                    <option value="All">All</option>
+                    <option value="pending">Pending</option>
+                    <option value="Delivered">Delivered</option>
+                    <option value="Cancelled">Cancelled</option>
+                    <option value="On The Way">On The Way</option>
+                    {/* Add more status options if needed */}
+                </select>
+            </div>
+
+
+
             <div className="overflow-x-auto">
                 {showReviewModal && (
                     <div className="modal">
@@ -108,7 +142,7 @@ const MyParcel = () => {
                     </thead>
                     <tbody>
                         {
-                            parcel?.map((p, index) => <tr key={p._id} >
+                            filteredParcel()?.map((p, index) => <tr key={p._id} >
                                 <th>{index + 1}</th>
                                 <td>{p.parcelType}</td>
                                 <td>{p.requestedDeliveryDate}</td>

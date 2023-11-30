@@ -91,15 +91,13 @@ const Dashboard = () => {
             <div className="flex-1">
                 
                 <div className="mt-20">
-                {
-                        logged?.role === 'admin' && (
-                            <>
-                                <div>
-                                   <Admin></Admin>
-                                </div>
-                            </>
-                        )
-                }
+                    {
+                       logged.role=='admin' && location.pathname === '/dashboard' && (
+                        <div>
+                            <Admin></Admin>
+                        </div>
+                       ) 
+                    }
                 </div>
                 <Outlet></Outlet>
             </div>

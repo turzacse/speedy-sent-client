@@ -1,6 +1,7 @@
 import { useContext, useState } from "react";
 import { AuthContext } from "../../../../Providers/AuthProvider";
 import useAxiosSexure from "../../../../hooks/useAxiosSexure";
+import Swal from "sweetalert2";
 
 
 const Book = () => {
@@ -49,16 +50,15 @@ const Book = () => {
         axiosSecure.post('/booking', booking)
             .then(res => {
                 console.log(res.data)
-                if (res.data.insertedId) {
+                if (res.data.message) {
+                    refetch();
                     Swal.fire({
                         position: "top-end",
                         icon: "success",
                         title: `added to your booked`,
                         showConfirmButton: false,
                         timer: 1500
-                    });
-                    // refetch cart to update the cart items count
-                    refetch();
+                    }); 
                 }
 
             })

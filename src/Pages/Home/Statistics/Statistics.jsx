@@ -1,10 +1,18 @@
+import { useState } from 'react';
 import CountUp from 'react-countup';
+import useUser from '../../../hooks/useUser';
+import useReview from '../../../hooks/useReview';
+import useParcel from '../../../hooks/useParcel';
+import useAllParcels from '../../../hooks/useAllParcels';
 
 
 const Statistics = () => {
+    const [users] = useUser();
+    const [reviews] = useReview();
+    const [parcels] = useAllParcels();
+    console.log(users.length, reviews.length, parcels.length)
     return (
         <div className='mb-10'>
-            Data come from backend
             <div className='text-center mb-10'>
                 <h1 className='md:text-5xl text-3xl font-bold text-[#05b37e] mb-5'>Parcel Odyssey  <span className='text-orange-400'>Insights in Motion</span></h1>
                 <p className='text-gray-400 md:mx-60 mx-10'>Embark on a dynamic journey through the "Parcel Odyssey: Insights in Motion." Explore the pulsating life of our app with real-time statistics that unveil the number of parcels booked, triumphantly delivered shipments, and the thriving community of users. Witness the animated heartbeat of our app, depicting its vibrant, ever-evolving nature in the realm of parcel management.</p>
@@ -18,7 +26,7 @@ const Statistics = () => {
                     </figure>
                     <div className="card-body items-center text-center">
                         <h2 className="card-title text-3xl font-bold text-[#05b37e]">Booked Parcel</h2>
-                        <div className='text-5xl font-bold text-orange-400'><CountUp start={0} end={100}></CountUp></div>
+                        <div className='text-5xl font-bold text-orange-400'><CountUp duration={5} start={0} end={parcels?.length}></CountUp></div>
                     </div>
                 </div>
 
@@ -28,7 +36,7 @@ const Statistics = () => {
                     </figure>
                     <div className="card-body items-center text-center">
                         <h2 className="card-title text-3xl font-bold text-[#05b37e]">Deliverd Parcel</h2>
-                        <div className='text-5xl font-bold text-orange-400'><CountUp duration={5} start={0} end={100}></CountUp></div>
+                        <div className='text-5xl font-bold text-orange-400'><CountUp duration={5} start={0} end={reviews.length}></CountUp></div>
                     </div>
                 </div>
 
@@ -38,7 +46,7 @@ const Statistics = () => {
                     </figure>
                     <div className="card-body items-center text-center">
                         <h2 className="card-title text-3xl font-bold text-[#05b37e]">Our Users</h2>
-                        <div className='text-5xl font-bold text-orange-400'><CountUp start={0} end={500}></CountUp></div>
+                        <div className='text-5xl font-bold text-orange-400'><CountUp start={0} end={users}></CountUp></div>
                     </div>
                 </div>
             </div>

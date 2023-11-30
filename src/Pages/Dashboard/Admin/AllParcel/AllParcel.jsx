@@ -1,29 +1,32 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import useAllParcels from "../../../../hooks/useAllParcels";
 import useUser from "../../../../hooks/useUser";
 import useAxiosSexure from "../../../../hooks/useAxiosSexure";
 
 const AllParcel = () => {
     const [parcels, refetch] = useAllParcels();
+    const [book, setBook] = useState(parcels);
     const [users] = useUser();
+    const [selectedParcel, setSelectedParcel] = useState(null);
+    const [selectedDeliveryMan, setSelectedDeliveryMan] = useState('');
+    const [approximateDeliveryDate, setApproximateDeliveryDate] = useState('');
     const deliveryMen = users.filter((userData) => userData.role === 'deliverymen');
 
     const axiosSecure = useAxiosSexure();
 
-    const [selectedParcel, setSelectedParcel] = useState(null); // State to handle selected parcel for modal display
-    const [selectedDeliveryMan, setSelectedDeliveryMan] = useState('');
-    const [approximateDeliveryDate, setApproximateDeliveryDate] = useState('');
+    // useEffect( () =>{
+    //     setBook(parcels);
+    //     refetch();
+    // } ,[parcels])
 
     const handleManageClick = (parcel) => {
-        setSelectedParcel(parcel); // Set the selected parcel to display in the modal
+        setSelectedParcel(parcel); 
         console.log('Ok');
     };
 
 
     const handleAssignDeliveryMan = async () => {
         if (!selectedParcel || !selectedDeliveryMan || !approximateDeliveryDate) {
-            // Ensure all fields are filled before proceeding
-            // You can add a notification to fill in all fields
             return;
         }
 
@@ -61,7 +64,7 @@ const AllParcel = () => {
 
     const [fromDate, setFromDate] = useState('');
     const [toDate, setToDate] = useState('');
-    const [filteredParcels, setFilteredParcels] = useState([...parcels]);
+    const [filteredParcels, setFilteredParcels] = useState([...book]);
 
     const handleSearch = () => {
         const filtered = parcels.filter((parcel) => {
@@ -86,12 +89,13 @@ const AllParcel = () => {
     const resetSearch = () => {
         setFromDate('');
         setToDate('');
-        setFilteredParcels([... parcels]);
+        setFilteredParcels([... book]);
     };
 
+    console.log(filteredParcels , parcels);
     return (
         <div className="mt-10">
-            <h2>All Parcels {parcels.length}</h2>
+            {/* <h2>All Parcels {parcels.length}</h2> */}
 
             <div className="mb-10">
             {/* <input type="text" placeholder="Type here" className="input input-bordered w-full max-w-xs" /> */}
@@ -157,25 +161,13 @@ const AllParcel = () => {
 
 
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <th></th>
-                            <th>Parcel Type</th>
-                            <th>Req. Delivery Date</th>
-                            <th>Approximate Date</th>
-                            <th>Booking date</th>
-                            <th>Delivery Man</th>
-                            <th>Status</th>
-                            <th>Action</th>
-                        </tr>
-                    </tfoot>
 
                 </table>
                 {selectedParcel && (
                     <dialog
-                        id={`my_modal_${selectedParcel._id}`} // Unique ID for each modal
+                        id={`my_modal_${selectedParcel._id}`} 
                         className="modal"
-                        open // Use the 'open' attribute to show the dialog
+                        open 
                     >
                         <div className="modal-box text-center">
                             <h3 className="font-bold text-center mb-4 text-lg">Assign Delivery Man</h3>

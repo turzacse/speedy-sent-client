@@ -28,7 +28,7 @@ const Reviews = () => {
         setLoading(false);
     }, [reviews, men]);
 
-    console.log(myReview);
+    console.log(reviews);
 
 
     return (
