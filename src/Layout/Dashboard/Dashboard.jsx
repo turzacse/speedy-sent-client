@@ -9,6 +9,7 @@ import { RiFeedbackFill } from "react-icons/ri";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "../../Providers/AuthProvider";
 import Admin from "./Admin/Admin";
+import useAxiosSexure from "../../hooks/useAxiosSexure";
 
 
 
@@ -17,21 +18,26 @@ import Admin from "./Admin/Admin";
 const Dashboard = () => {
 
     const { user } = useContext(AuthContext);
-    //console.log(user.email);
+    const Email = user.email;
+    //console.log(Email);
     const [logged, setLogged] = useState([]);
     const [loading, setLoading] = useState(true);
+    const axiosSecure = useAxiosSexure();
 
     useEffect(() => {
-        if (logged) {
-            fetch(`http://localhost:5000/users/${user?.email}`)
-                .then(res => res.json())
-                .then(data => {
-                    setLogged(data);
-                    setLoading(false);
-                })
+        const fetchData = async () => {
+            try{
+                const response = await axiosSecure.get(`/users/${Email}`);
+                setLogged(response.data);
+                setLoading(false);
+            }
+            catch(error){
+                console.error('Error fetching user data:', error);
+                setLoading(false);
+            }
         }
-
-    }, [logged])
+        fetchData();
+    }, [Email])
 
     //console.log(logged.role);
 

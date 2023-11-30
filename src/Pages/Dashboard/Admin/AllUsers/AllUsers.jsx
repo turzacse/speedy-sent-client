@@ -3,10 +3,8 @@ import useUser from "../../../../hooks/useUser";
 const AllUsers = () => {
     const [users, refetch] = useUser();
     console.log(users);
-    const filteredUsers = users.filter((userData) => userData.role === 'user');
-    console.log(filteredUsers);
 
-    const handleDeliveryMen = async(id) => {
+    const handleDeliveryMen = async (id) => {
         try {
             const response = await fetch(`http://localhost:5000/users/${id}`, {
                 method: 'PUT',
@@ -35,7 +33,7 @@ const AllUsers = () => {
                     'Content-Type': 'application/json'
                 }
             });
-    
+
             if (response.ok) {
                 refetch();
                 console.log('User role updated to Admin');
@@ -65,18 +63,39 @@ const AllUsers = () => {
                     </thead>
                     <tbody>
                         {
-                            filteredUsers.map((p, index) => <tr key={p._id} >
+                            users.map((p, index) => <tr key={p._id} >
                                 <th>{index + 1}</th>
                                 <td>{p.name}</td>
                                 <td>{p.phoneNumber || 'Not Provide'}</td>
                                 {/* //number of pacel bookend  */}
                                 <td>{p.bookingDate}</td>
-                                <td><button
-                                onClick={() => handleDeliveryMen(p._id)}
-                                className="btn btn-outline btn-warning">Make Delivery Men</button></td>
-                                <td><button 
-                                onClick={() => handleMakeAdmin(p._id)}
-                                className="btn btn-outline btn-success">Make Admin</button></td>
+                                <td>
+                                    {
+                                        p.role === 'user' ? <>
+                                            <button
+                                                onClick={() => handleDeliveryMen(p._id)}
+                                                className="btn btn-outline btn-warning">Make Delivery Men</button>
+                                        </>
+                                            :
+                                            <>
+                                                <p>{p.role}</p>
+                                            </>
+
+                                    }
+                                </td>
+                                <td>
+                                    {
+                                        p.role === 'admin' ? <>
+                                            <p>Admin</p>
+                                        </>
+                                            :
+                                            <>
+                                                <button
+                                                    onClick={() => handleMakeAdmin(p._id)}
+                                                    className="btn btn-outline btn-success">Make Admin</button>
+                                            </>
+                                    }
+                                </td>
                             </tr>)
                         }
                     </tbody>

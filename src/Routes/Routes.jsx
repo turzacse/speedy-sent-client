@@ -38,7 +38,7 @@ import Reviews from "../Pages/Dashboard/DelivaryMen/Reviews/Reviews";
     // dashboard routes 
     {
       path: "dashboard",
-      element: <Dashboard></Dashboard>,
+      element: <PrivateRoute><Dashboard></Dashboard></PrivateRoute>,
       children: [
         // user route 
         {

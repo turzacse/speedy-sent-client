@@ -1,7 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import useAxiosSexure from "./useAxiosSexure";
-import { useContext } from "react";
-import { AuthContext } from "../Providers/AuthProvider";
 
 const useAllParcels = () => {
     const axiosSecure = useAxiosSexure();

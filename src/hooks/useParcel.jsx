@@ -7,14 +7,14 @@ const useParcel = () => {
     const axiosSecure = useAxiosSexure();
     const {user} = useContext(AuthContext);
 
-    const { data: parcel =[] } = useQuery({
+    const {refetch, data: parcel =[] } = useQuery({
         queryKey: ['parcel'],
         queryFn: async () => {
             const res = await axiosSecure.get(`/booking/${user.email}`)
             return res.data
         }
     })
-    return [parcel];
+    return [parcel, refetch];
 };
 
 export default useParcel;
