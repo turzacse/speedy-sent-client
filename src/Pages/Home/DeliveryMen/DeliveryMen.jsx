@@ -45,31 +45,32 @@ const DeliveryMen = () => {
                 });
             }
 
-            setDeliveryMenStats(statsArray);
+            const deliveryMenWithDetails = statsArray.map(deliveryMan => {
+                const { deliveryManId, reviewCount, averageRating } = deliveryMan;
+                const user = users.find(user => user._id === deliveryManId);
+        
+                return {
+                    deliveryManId,
+                    reviewCount,
+                    averageRating,
+                    name: user?.name || 'Unknown',
+                    photo: user?.photo || ''
+                };
+            });
+        
+            console.log(deliveryMenWithDetails);
+            deliveryMenWithDetails.sort((a, b) => b.reviewCount - a.reviewCount);
+        
+            const topFiveDeliveryMen = deliveryMenWithDetails.slice(0, 5);
+        
+            setDeliveryMenStats(topFiveDeliveryMen);
         };
 
         calculateStats();
-    }, [reviews]);
+        
+    }, [reviews, users]);
 
-    const deliveryMenWithDetails = deliveryMenStats.map(deliveryMan => {
-        const { deliveryManId, reviewCount, averageRating } = deliveryMan;
-        const user = users.find(user => user._id === deliveryManId);
-
-        return {
-            deliveryManId,
-            reviewCount,
-            averageRating,
-            name: user?.name || 'Unknown',
-            photo: user?.photo || ''
-        };
-    });
-
-    console.log(deliveryMenWithDetails);
-    deliveryMenWithDetails.sort((a, b) => b.reviewCount - a.reviewCount);
-
-    const topFiveDeliveryMen = deliveryMenWithDetails.slice(0, 5);
-
-    console.log(topFiveDeliveryMen);
+    
 
     return (
         <div>
@@ -84,8 +85,8 @@ const DeliveryMen = () => {
             <div className="grid lg:grid-cols-5 md:grid-cols-3 gap-4 grid-cols-1">
                 {/* 1 */}
                 {
-                    topFiveDeliveryMen.map(men => <>
-                        <div className="card bg-base-100 shadow-xl">
+                    deliveryMenStats.map(men => 
+                        <div key={men.deliveryManId} className="card bg-base-100 shadow-xl">
                             <figure className="px-10 pt-10">
                                 <img src={men.photo} alt="Shoes" className="rounded-xl shadow-inner h-[150px]" />
                             </figure>
@@ -99,7 +100,7 @@ const DeliveryMen = () => {
                                 />
                             </div>
                         </div>
-                    </>)
+                    )
                 }
                 {/* <div className="card bg-base-100 shadow-xl">
                     <figure className="px-10 pt-10">

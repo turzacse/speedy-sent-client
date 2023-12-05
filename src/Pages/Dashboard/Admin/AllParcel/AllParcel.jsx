@@ -5,7 +5,7 @@ import useAxiosSexure from "../../../../hooks/useAxiosSexure";
 
 const AllParcel = () => {
     const [parcels, refetch] = useAllParcels();
-    const [book, setBook] = useState(parcels);
+    const [book, setBook] = useState(() => parcels);
     const [users] = useUser();
     const [selectedParcel, setSelectedParcel] = useState(null);
     const [selectedDeliveryMan, setSelectedDeliveryMan] = useState('');
@@ -14,10 +14,9 @@ const AllParcel = () => {
 
     const axiosSecure = useAxiosSexure();
 
-    // useEffect( () =>{
-    //     setBook(parcels);
-    //     refetch();
-    // } ,[parcels])
+    useEffect( () =>{
+        setBook(parcels);
+    } ,[parcels])
 
     const handleManageClick = (parcel) => {
         setSelectedParcel(parcel); 
@@ -64,7 +63,11 @@ const AllParcel = () => {
 
     const [fromDate, setFromDate] = useState('');
     const [toDate, setToDate] = useState('');
-    const [filteredParcels, setFilteredParcels] = useState([...book]);
+    const [filteredParcels, setFilteredParcels] = useState([]);
+    useEffect( () =>{
+    if(!book || !book.length) return
+    setFilteredParcels(book);
+    } ,[book])
 
     const handleSearch = () => {
         const filtered = parcels.filter((parcel) => {
@@ -84,7 +87,9 @@ const AllParcel = () => {
         });
 
         setFilteredParcels(filtered);
+
     };
+
 
     const resetSearch = () => {
         setFromDate('');
@@ -141,7 +146,7 @@ const AllParcel = () => {
                                 }
                                 <td>
                                     {
-                                        p.bookingStatus === 'On The Way' ? <>
+                                        p.bookingStatus !== 'pending' ? <>
                                         <button className="btn btn-warning btn-disabled">Assign</button>
                                         </>
                                             :
