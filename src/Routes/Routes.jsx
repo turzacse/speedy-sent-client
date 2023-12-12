@@ -16,6 +16,7 @@ import AllDeliveryMen from "../Pages/Dashboard/Admin/AllDeliveryMen/AllDeliveryM
 import AllUsers from "../Pages/Dashboard/Admin/AllUsers/AllUsers";
 import MyDelivery from "../Pages/Dashboard/DelivaryMen/MyDelivery/MyDelivery";
 import Reviews from "../Pages/Dashboard/DelivaryMen/Reviews/Reviews";
+import About from "../Pages/About/About";
 
 
   export const router = createBrowserRouter([
@@ -26,6 +27,10 @@ import Reviews from "../Pages/Dashboard/DelivaryMen/Reviews/Reviews";
         {
             path: "/",
             element: <Home></Home>
+        },
+        {
+          path: '/about',
+          element:<About></About>
         },
         {
           path: "/private",

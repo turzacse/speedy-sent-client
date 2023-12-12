@@ -11,6 +11,7 @@ const Navber = () => {
         <li className='font-semibold'><NavLink to='/'>Home</NavLink></li>
         <li className='font-semibold'><NavLink to='/dashboard'>Deshboard</NavLink></li>
         <li className='font-semibold'><NavLink to='/private'>Private</NavLink></li>
+        <li className='font-semibold'><NavLink to='/about'>About</NavLink></li>
         
     </>
     return (
